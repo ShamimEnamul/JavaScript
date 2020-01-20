@@ -44,6 +44,21 @@ class UI{
         list.appendChild(row);
 
    }
+
+   static cleanField()
+   {
+       document.getElementById('title').value = '';
+       document.getElementById('author').value = '';
+       document.getElementById('isbn').value = '';
+   }
+
+   static deleteABook(el)
+   {
+       if(el.classList.contains('delete'))
+       {
+            el.parentElement.parentElement.remove();
+       }
+   }
 }
 
 //event display book
@@ -52,15 +67,23 @@ document.addEventListener('DOMContentLoaded', UI.displayBooks);
 //event add book
 document.querySelector('#book-form').addEventListener('submit', (e) => {
 
-    const title = document.querySelector('#title').value;
-const author = document.querySelector('#author').value;
-const isbn = document.querySelector('#isbn').value;
+e.preventDefault();
+const title = document.getElementById('title').value;
+const author = document.getElementById('author').value;
+const isbn = document.getElementById('isbn').value;
 
 //initialize book
-const b = new Book(title,author,isbn);
+const book = new Book(title,author,isbn);
+UI.addBookToList(book);
+
+UI.cleanField();
 
 
 });
+document.getElementById('book-list').addEventListener('click',(e)=>
+{
+    UI.deleteABook(e.target);
+})
 
 
 
